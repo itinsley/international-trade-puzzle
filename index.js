@@ -1,9 +1,8 @@
-var rates = require('./lib/rates');
+var Rates = require('./lib/rates');
 
-rates.all()
-  .then(log)
-  .then(function(){
-    console.log("not a promise so it stops here..")
+Rates.all()
+  .then(function(rates){
+    Rates.augmentedRates(rates);
   })
 
 function log(string){

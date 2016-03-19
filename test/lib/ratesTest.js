@@ -30,9 +30,24 @@ describe("Rates", function() {
   describe("distinctCodes", function(){
     it("should return list of unique currency codes", function() {
       codes = Rates.distinctCodes(rates);
-      console.log(codes)
       assert.deepEqual(codes, ['AUD', 'CAD', 'EUR', 'USD']);
     });
   });
+
+  describe("nonUSDCodes", function(){
+    it("should return currency codes without USD", function() {
+      codes = Rates.distinctCodes(rates);
+      result = Rates.nonUsdCodes(codes)
+      assert.deepEqual(result, ['AUD', 'CAD', 'EUR']);
+    });
+  });
+
+  describe("missingRates", function(){
+    it("should return list of currency codes that don't have a USD rate", function() {
+      codes = Rates.missingRates(Rates.indexed(rates), Rates.distinctCodes(rates));
+      assert.deepEqual(codes, ['AUD', 'EUR']);
+    });
+  });
+
 
 });
