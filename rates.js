@@ -28,6 +28,19 @@ function all(){
   });
 }
 
+function distinct(){
+  return new Promise(function(resolve, reject){
+    all()
+      .then(function(rates){
+        _distinct={};
+        rates.forEach(function(rate){
+          _distinct[rate['from']]='';
+          _distinct[rate['to']]='';
+        })
+        resolve(Object.keys(_distinct));
+      })
+  });
+}
 
 // rates()
 //  .then(function(_rates){
@@ -36,5 +49,6 @@ function all(){
 //  })
 
 module.exports = {
-  all: all
+  all: all,
+  distinct: distinct
 }

@@ -1,23 +1,15 @@
 var rates = require('./rates');
 
+rates.distinct()
+  .then(log)
+  .then(function(){
+    console.log("not a promise so it stops here..")
+  })
 
-// Demonstrate memoisation of rates!
-// rates.all()
-//   .then(function(_rates){
-//     console.log(_rates);
-//     return new Promise(function(resolve, reject){
-//       console.log(_rates)
-//       resolve();
-//     });
-//   })
-//   .then(function(){
-//     rates.all()
-//       .then(function(_rates){
-//         console.log(_rates);
-//       })
-//   })
 
-rates.all()
-  .then(function(_rates){
-    console.log(_rates);
+function log(string){
+  return new Promise(function(resolve, reject){
+    console.log(string);
+    resolve();
   });
+}
