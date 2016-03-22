@@ -2,7 +2,7 @@ var Rates = require('./lib/rates');
 
 Rates.all()
   .then(function(rates){
-    Rates.augmentedRates(rates);
+    console.log(Rates.routeToUsd(rates, 'AUD'))
   })
 
 function log(string){
