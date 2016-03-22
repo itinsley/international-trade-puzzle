@@ -27,24 +27,24 @@ describe("Rates", function() {
     });
   });
 
-  describe("distinctCodes", function(){
+  describe("Currencies", function(){
     it("should return list of unique currency codes", function() {
-      codes = Rates.distinctCodes(rates);
+      codes = Rates.currencies(rates);
       assert.deepEqual(codes, ['AUD', 'CAD', 'EUR', 'USD']);
     });
   });
 
-  describe("nonUSDCodes", function(){
+  describe("nonUsdCurrencies", function(){
     it("should return currency codes without USD", function() {
-      codes = Rates.distinctCodes(rates);
-      result = Rates.nonUsdCodes(codes)
+      codes = Rates.currencies(rates);
+      result = Rates.nonUsdCurrencies(codes)
       assert.deepEqual(result, ['AUD', 'CAD', 'EUR']);
     });
   });
 
-  describe("missingRates", function(){
-    it("should return list of currency codes that don't have a USD rate", function() {
-      codes = Rates.missingRates(Rates.indexed(rates), Rates.distinctCodes(rates));
+  describe("currenciesWithoutUsdRate", function(){
+    it.only("should return list of currency codes that don't have a USD rate", function() {
+      codes = Rates.currenciesWithoutUsdRate(rates);
       assert.deepEqual(codes, ['AUD', 'EUR']);
     });
   });
