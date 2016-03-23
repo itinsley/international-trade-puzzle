@@ -13,6 +13,16 @@ describe("Rates", function() {
       });
   })
 
+  describe("All", function(){
+    it("should return rates from input RATES.xml file", function() {
+      expect(rates.length).to.eql(6);
+    });
+    it("should parse conversion as float", function() {
+      expect(typeof rates[0]['conversion']).to.eql('number');
+    });
+  });
+
+
   describe("Currencies", function(){
     it("should return list of unique currency codes", function() {
       codes = Rates.currencies(rates);
