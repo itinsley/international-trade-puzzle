@@ -37,7 +37,9 @@ describe("Rates", function() {
   describe("routeToUsd", function(){
     it("should find a route to the USD from provided currency", function() {
       route = Rates.routeToUsd(rates, 'AUD')
-      assert.deepEqual(route, ['AUD', 'CAD', 'USD']);
+      assert.deepEqual(route, [ 'AUD', 'CAD', 'USD' ]);
+      route = Rates.routeToUsd(rates, 'EUR')
+      assert.deepEqual(route, [ 'EUR', 'AUD', 'CAD', 'USD' ]);
     });
   });
 
