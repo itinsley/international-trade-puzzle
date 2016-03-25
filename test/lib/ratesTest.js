@@ -4,24 +4,13 @@ var Rates = require("../../lib/rates");
 
 describe("Rates", function() {
 
-  var rates;
-  before(function(done){
-    Rates.all()
-      .then(function(_rates){
-        rates = _rates;
-        done();
-      });
-  })
-
-  describe("All", function(){
-    it("should return rates from input RATES.xml file", function() {
-      expect(rates.length).to.eql(6);
-    });
-    it("should parse conversion as float", function() {
-      expect(typeof rates[0]['conversion']).to.eql('number');
-    });
-  });
-
+  var rates = [
+    {"from":"AUD","to":"CAD","conversion":1.0079},
+    {"from":"AUD","to":"EUR","conversion":0.7439},
+    {"from":"CAD","to":"AUD","conversion":0.9921},
+    {"from":"CAD","to":"USD","conversion":1.009},
+    {"from":"EUR","to":"AUD","conversion":1.3442},
+    {"from":"USD","to":"CAD","conversion":0.9911}]
 
   describe("Currencies", function(){
     it("should return list of unique currency codes", function() {
@@ -52,7 +41,5 @@ describe("Rates", function() {
       assert.deepEqual(route, [ 'EUR', 'AUD', 'CAD', 'USD' ]);
     });
   });
-
-
 
 });
