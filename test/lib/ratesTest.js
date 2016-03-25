@@ -14,9 +14,10 @@ describe("Rates", function() {
 
   describe("All", function(){
     it("should return rates including calculated missing rates", function() {
-      all = Rates.all(rates);
-      expect(Rates.findRate(all, 'AUD', 'USD')).to.exist;
-      expect(Rates.findRate(all, 'EUR', 'USD')).to.exist;
+      Rates.all(rates).then(function(rates){
+        expect(Rates.findRate(rates, 'AUD', 'USD')).to.exist;
+        expect(Rates.findRate(rates, 'EUR', 'USD')).to.exist;
+      });
     });
   });
 
