@@ -12,6 +12,14 @@ describe("Rates", function() {
     {"from":"EUR","to":"AUD","conversion":1.3442},
     {"from":"USD","to":"CAD","conversion":0.9911}]
 
+  describe("All", function(){
+    it("should return rates including calculated missing rates", function() {
+      all = Rates.all(rates);
+      expect(Rates.findRate(all, 'AUD', 'USD')).to.exist;
+      expect(Rates.findRate(all, 'EUR', 'USD')).to.exist;
+    });
+  });
+
   describe("Currencies", function(){
     it("should return list of unique currency codes", function() {
       codes = Rates.currencies(rates);
@@ -39,6 +47,12 @@ describe("Rates", function() {
       assert.deepEqual(route, [ 'AUD', 'CAD', 'USD' ]);
       route = Rates.routeToUsd(rates, 'EUR')
       assert.deepEqual(route, [ 'EUR', 'AUD', 'CAD', 'USD' ]);
+    });
+  });
+
+  describe("calculateUsdRate", function(){
+    it("should calculate USD rate for currency using cross rates", function() {
+      expect(Rates.calculateUsdRate(rates, 'AUD')['conversion']).to.eql(1.0169711);
     });
   });
 
