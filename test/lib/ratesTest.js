@@ -14,10 +14,9 @@ describe("Rates", function() {
 
   describe("All", function(){
     it("should return rates including calculated missing rates", function() {
-      Rates.all(rates).then(function(rates){
-        expect(Rates.findRate(rates, 'AUD', 'USD')).to.exist;
-        expect(Rates.findRate(rates, 'EUR', 'USD')).to.exist;
-      });
+      allRates = Rates.all(rates)
+      expect(Rates.findRate(allRates, 'AUD', 'USD')).to.exist;
+      expect(Rates.findRate(allRates, 'EUR', 'USD')).to.exist;
     });
   });
 
@@ -32,13 +31,6 @@ describe("Rates", function() {
     it("should return currency codes without USD", function() {
       result = Rates.nonUsdCurrencies(rates)
       assert.deepEqual(result, ['AUD', 'CAD', 'EUR']);
-    });
-  });
-
-  describe("currenciesWithoutUsdRate", function(){
-    it("should return list of currency codes that don't have a USD rate", function() {
-      codes = Rates.currenciesWithoutUsdRate(rates);
-      assert.deepEqual(codes, ['AUD', 'EUR']);
     });
   });
 

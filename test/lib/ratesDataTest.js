@@ -7,7 +7,7 @@ describe("RatesData", function() {
   var rates;
 
   before(function(done){
-    ratesData.all()
+    ratesData.all(__dirname + '/../fixtures/rates.xml')
       .then(function(_rates){
         rates = _rates;
         done();
