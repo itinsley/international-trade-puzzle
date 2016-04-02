@@ -22,7 +22,6 @@ var parse = require('csv-parse');
 
 
 Transactions.findAllBySku(transStream, 'DM1182').then(function(trans){
-  console.log("end")
   console.log(trans);
 });
 
