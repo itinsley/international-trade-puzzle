@@ -12,9 +12,9 @@ describe("Rates", function() {
     {"from":"EUR","to":"AUD","conversion":1.3442},
     {"from":"USD","to":"CAD","conversion":0.9911}]
 
-  describe("All", function(){
+  describe("withUsdRates", function(){
     it("should return rates including calculated missing rates", function() {
-      allRates = Rates.all(rates)
+      allRates = Rates.withUsdRates(rates)
       expect(Rates.findRate(allRates, 'AUD', 'USD')).to.exist;
       expect(Rates.findRate(allRates, 'EUR', 'USD')).to.exist;
     });
