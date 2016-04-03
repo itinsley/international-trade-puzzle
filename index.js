@@ -1,18 +1,15 @@
 var Promise = require("bluebird");
-var parse = require('csv-parse');
-
+var dataSources = require('./lib/dataSources')(__dirname + '/puzzle');
 var Rates = require('./lib/rates');
-var RatesData = require('./lib/ratesData');
 var Transactions = require('./lib/transactions');
 
-var ratesFile = __dirname + '/puzzle/RATES.xml';
-var transFile = __dirname + '/puzzle/TRANS.csv';
 
-var fetchRatesData = RatesData.all(ratesFile);
-var transStream = Transactions.stream(transFile);
+var transStream = Transactions.stream(dataSources.transFile);
 var fetchTrans = Transactions.filterBySku(transStream, 'DM1182');
 
-Promise.all([fetchRatesData, fetchTrans])
+console.log(fetchTrans)
+
+Promise.all([dataSources.fetchRatesData, fetchTrans])
   .then(function(results){
     var ratesData    = results[0]
     var transactions = results[1]
@@ -20,4 +17,3 @@ Promise.all([fetchRatesData, fetchTrans])
 
     console.log(Transactions.totalUsd(transactions, rates));
   })
-
