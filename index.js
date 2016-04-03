@@ -1,19 +1,14 @@
 var Promise = require("bluebird");
 var dataSources = require('./lib/dataSources')(__dirname + '/puzzle');
-var Rates = require('./lib/rates');
 var Transactions = require('./lib/transactions');
 
-
-var transStream = Transactions.stream(dataSources.transFile);
-var fetchTrans = Transactions.filterBySku(transStream, 'DM1182');
-
-console.log(fetchTrans)
-
-Promise.all([dataSources.fetchRatesData, fetchTrans])
-  .then(function(results){
-    var ratesData    = results[0]
-    var transactions = results[1]
-    var rates = Rates.all(ratesData);
-
-    console.log(Transactions.totalUsd(transactions, rates));
-  })
+dataSources.fetchRates()
+  //Fetch rates first as they would be used as a dependency
+  .then(function(rates){
+    //Transactions are fetched as a promise as they are a filtered stream
+    fetchTrans = Transactions.fetchFilteredBySku(dataSources.transactionsStream, 'DM1182')
+    fetchTrans.then(function(transactions){
+      var result = Transactions.totalUsd(transactions, rates);
+      console.log(result);
+    })
+  });

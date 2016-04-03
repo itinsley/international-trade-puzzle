@@ -5,12 +5,12 @@ var transactions = require("../../lib/transactions");
 var rates        = require("../../lib/rates");
 
 describe("Transactions", function() {
-  describe("filterBySku", function(){
+  describe("filteredBySku", function(){
     var transFile = __dirname + '/../fixtures/trans.csv';
     var transStream = transactions.stream(transFile);
 
     it("should return transactions with provided sku", function(done) {
-      transactions.filterBySku(transStream, 'DM1182')
+      transactions.fetchFilteredBySku(transStream, 'DM1182')
         .then(function(result){
           expect(result.length).to.eql(3)
           done();
