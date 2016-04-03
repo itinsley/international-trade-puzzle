@@ -1,23 +1,14 @@
 var Promise = require("bluebird");
-var parse = require('csv-parse');
+var dataSources = require('./lib/dataSources')(__dirname + '/puzzle');
+var Transactions = require('./lib/transactions')(dataSources.transFile);
 
-var Rates = require('./lib/rates');
-var RatesData = require('./lib/ratesData');
-var Transactions = require('./lib/transactions');
-
-var ratesFile = __dirname + '/puzzle/RATES.xml';
-var transFile = __dirname + '/puzzle/TRANS.csv';
-
-var fetchRatesData = RatesData.all(ratesFile);
-var transStream = Transactions.stream(transFile);
-var fetchTrans = Transactions.filterBySku(transStream, 'DM1182');
-
-Promise.all([fetchRatesData, fetchTrans])
-  .then(function(results){
-    var ratesData    = results[0]
-    var transactions = results[1]
-    var rates = Rates.all(ratesData);
-
-    console.log(Transactions.totalUsd(transactions, rates));
-  })
-
+dataSources.fetchRates()
+  //Fetch rates first as they would be used as a dependency
+  .then(function(rates){
+    //Transactions are fetched as a promise as they are a filtered stream
+    Transactions.fetchFilteredBySku('DM1182')
+      .then(function(transactions){
+        var result = Transactions.totalUsd(transactions, rates);
+        console.log(result);
+      })
+  });
